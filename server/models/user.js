@@ -8,11 +8,19 @@ module.exports = function (mongoose) {
             number: String,
             departure: {
                 date: Date,
-                location: String
+                location: {
+                  address: String,
+                  latitude: Number,
+                  longitude: Number
+                }
             },
             arrival: {
                 date: Date,
-                location: String
+                location: {
+                  address: String,
+                  latitude: Number,
+                  longitude: Number
+                }
             }
         }]
     });
