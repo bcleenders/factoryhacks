@@ -1,0 +1,22 @@
+{
+  "name": "factoryhacks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:bcleenders/factoryhacks.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bcleenders/factoryhacks/issues"
+  },
+  "homepage": "https://github.com/bcleenders/factoryhacks",
+  "dependencies": {
+    "hapi": "^8.6.1"
+  }
+}
