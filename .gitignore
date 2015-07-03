@@ -1,3 +1,7 @@
+# Ignore our secrets (API tokens, etc.)
+*secrets*
+!*secrets.example*
+
 # Logs
 logs
 *.log
