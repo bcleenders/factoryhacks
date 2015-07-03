@@ -7,9 +7,9 @@ var routes = [
         }
     },
     {
-        method: 'POST',
+        method: ['POST', 'GET'],
         path: '/flight/{flight_id}',
-        handler: require('./handlers/flightInfo').handle
+        handler: require('./handelers/flightInfo').handle
     }
 ];
 
