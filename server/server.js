@@ -27,7 +27,7 @@ for (var i = 0; i < routes.length; i++) {
 }
 
 // Load the plugins
-var plugins = require('./config/plugins');
+var plugins = require('./plugins');
 for(var name in plugins) {
     console.log('Registered ' + name + " plugin");
     var plug = plugins[name].options ? {register: plugins[name].register, options: plugins[name].options} : plugins[name];
