@@ -3,7 +3,10 @@ var secrets = require('../secrets');
 
 var handle = function (req, reply) {
 
-	var flightNumber = req.params.flight_id;
+	var name = 'Bram';//req.payload.name;
+	var flightNumber = req.params.flight;
+	var originAddress = 'A';//req.payload.originAddress;
+	var destinationAddress = 'B';//req.payload.destinationAddress;
 	var departureDate = req.params.departureDate;
 
 	flightNumber = 'LH1041';
@@ -35,20 +38,22 @@ var handle = function (req, reply) {
 					var arrivalAirport = response.body.FlightStatusResource.Flights.Flight.Arrival.AirportCode;
 					var arrivalTime = new Date(response.body.FlightStatusResource.Flights.Flight.Arrival.ScheduledTimeUTC.DateTime);
 
-					console.log(departureCode);
+					console.log(departureAirport);
 					console.log(departureTime);
-					console.log(arrivalCode);
+					console.log(arrivalAirport);
 					console.log(arrivalTime);
 
 					var User = server.plugins.models.user;
 					var u = new User({
-						name: 'Bram',
+						name: name,
 						flights: [{
 							number: String,
+							originAddress: originAddress,
 							departure: {
 								date: departureTime,
 								location: String
 							},
+							destinationAddress: destinationAddress,
 							arrival: {
 								date: arrivalTime,
 								location: String
@@ -56,7 +61,9 @@ var handle = function (req, reply) {
 						}]
 					});
 
-					reply('Done...')
+					u.save();
+
+					reply({userid: u._id});
 				});
 		});
 };
