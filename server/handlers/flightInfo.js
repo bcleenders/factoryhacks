@@ -2,10 +2,12 @@ var unirest = require('unirest');
 var secrets = require('../secrets');
 
 var handle = function (req, reply) {
-	var url = 'https://api.lufthansa.com/v1/oauth/token';
 
-	console.log("Your posted for flight id ");
-	console.log(req.params.flight_id);
+	var flightNumber = req.params.flight_id;
+	var departureDate = req.params.departureDate;
+
+	flightNumber = 'DLH1041';
+	departureDate = '2015-07-02';
 
 	var postData = {
 		client_id: secrets.lufthansa.client_id,
@@ -17,12 +19,14 @@ var handle = function (req, reply) {
 		.header('Accept', 'application/json')
 		.send(postData)
 		.end(function (response) {
-			console.log(response);
-
 			access_token = response.body.access_token;
-			expires_at = now + response.body.expires_in;
 
-
+			unirest.get('https://api.lufthansa.com/v1/operations/flightstatus/' + flightNumber + '/' + departureDate)
+				.header("Authorization", "Bearer " + access_token)
+				.header('Accept', 'application/json')
+				.end(function(response) {
+					console.log(response);
+				});
 		});
 };
 
