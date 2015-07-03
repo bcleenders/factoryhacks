@@ -8,15 +8,82 @@
  * Controller of yapp
  */
 angular.module('yapp')
-  .controller('LoginCtrl', function($scope, $location, $window) {
+    .controller('LoginCtrl', function ($scope, $location, $window) {
 
-    $scope.submit = function() {
-      alert($scope.name);
+        $scope.today = function () {
+            $scope.dt = new Date();
+        };
+        $scope.today();
 
-      $location.path('/dashboard');
+        $scope.clear = function () {
+            $scope.dt = null;
+        };
 
-      //$window.location.href = 'https://login.uber.com/oauth/authorize';
-      return false;
-    }
+        // Disable weekend selection
+        $scope.disabled = function (date, mode) {
+            return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+        };
 
-  });
+        $scope.toggleMin = function () {
+            $scope.minDate = $scope.minDate ? null : new Date();
+        };
+        $scope.toggleMin();
+
+        $scope.open = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            $scope.opened = true;
+        };
+
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+
+        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+        $scope.format = $scope.formats[0];
+
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        var afterTomorrow = new Date();
+        afterTomorrow.setDate(tomorrow.getDate() + 2);
+        $scope.events =
+            [
+                {
+                    date: tomorrow,
+                    status: 'full'
+                },
+                {
+                    date: afterTomorrow,
+                    status: 'partially'
+                }
+            ];
+
+        $scope.getDayClass = function (date, mode) {
+            if (mode === 'day') {
+                var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
+
+                for (var i = 0; i < $scope.events.length; i++) {
+                    var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
+
+                    if (dayToCheck === currentDay) {
+                        return $scope.events[i].status;
+                    }
+                }
+            }
+
+            return '';
+        };
+
+
+        $scope.submit = function () {
+            alert($scope.name);
+
+            $location.path('/dashboard');
+
+            //$window.location.href = 'https://login.uber.com/oauth/authorize';
+            return false;
+        }
+
+    });
