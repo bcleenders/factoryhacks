@@ -8,45 +8,51 @@
  *
  * Main module of the application.
  */
- angular
- .module('yapp', [
-    'ui.router',
-    'ui.bootstrap',
-    'snap',
-    'ngAnimate'
+angular
+    .module('yapp', [
+        'ui.router',
+        'ui.bootstrap',
+        'snap',
+        'ngStorage',
+        'ngAnimate',
+        'restangular'
     ])
- .config(function($stateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $locationProvider, RestangularProvider) {
 
-    $urlRouterProvider.when('/dashboard', '/dashboard/overview');
-    $urlRouterProvider.otherwise('/login');
+        $locationProvider.html5Mode(true);
 
-    $stateProvider
-    .state('base', {
-        abstract: true,
-        url: '',
-        templateUrl: 'views/base.html'
-    })
-    .state('login', {
-      url: '/login',
-      parent: 'base',
-      templateUrl: 'views/login.html',
-      controller: 'LoginCtrl'
-  })
-    .state('dashboard', {
-      url: '/dashboard',
-      parent: 'base',
-      templateUrl: 'views/dashboard.html',
-      controller: 'DashboardCtrl'
-  })
-    .state('overview', {
-        url: '/overview',
-        parent: 'dashboard',
-        templateUrl: 'views/dashboard/overview.html'
-    })
-    .state('reports', {
-        url: '/reports',
-        parent: 'dashboard',
-        templateUrl: 'views/dashboard/reports.html'
+        $urlRouterProvider.when('/dashboard', '/dashboard/overview');
+        $urlRouterProvider.otherwise('/login');
+
+        RestangularProvider.setBaseUrl("http://localhost:3000/");
+
+        $stateProvider
+            .state('base', {
+                abstract: true,
+                url: '',
+                templateUrl: 'views/base.html'
+            })
+            .state('login', {
+                url: '/login',
+                parent: 'base',
+                templateUrl: 'views/login.html',
+                controller: 'LoginCtrl'
+            })
+            .state('dashboard', {
+                url: '/dashboard',
+                parent: 'base',
+                templateUrl: 'views/dashboard.html',
+                controller: 'DashboardCtrl'
+            })
+            .state('overview', {
+                url: '/overview',
+                parent: 'dashboard',
+                templateUrl: 'views/dashboard/overview.html'
+            })
+            .state('reports', {
+                url: '/reports',
+                parent: 'dashboard',
+                templateUrl: 'views/dashboard/reports.html'
+            });
+
     });
-
-});

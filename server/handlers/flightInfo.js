@@ -9,6 +9,8 @@ var handle = function (req, reply) {
 	var destinationAddress = req.payload.destinationAddress;
 	var departureDate = req.payload.departureDate;
 
+	console.log(name);
+
 	var postData = {
 		client_id: secrets.lufthansa.client_id,
 		client_secret: secrets.lufthansa.client_secret,
