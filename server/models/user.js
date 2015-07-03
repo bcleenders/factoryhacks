@@ -1,8 +1,14 @@
 module.exports = function(mongoose) {
-	var Model = mongoose.model('User', {
-		username: String,
-    name: String
-	});
+  var Schema = mongoose.Schema;
+  var schema = new Schema({
+    name: String,
+    flights: [{
+      number: String,
+      departure: {date: Date, location: String},
+      arrival: {date: Date, location: String}
+    }]
+  });
+	var Model = mongoose.model('User', schema);
 
 	return Model;
 };
