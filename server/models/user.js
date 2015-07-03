@@ -1,14 +1,20 @@
-module.exports = function(mongoose) {
-  var Schema = mongoose.Schema;
-  var schema = new Schema({
-    name: String,
-    flights: [{
-      number: String,
-      departure: {date: Date, location: String},
-      arrival: {date: Date, location: String}
-    }]
-  });
-	var Model = mongoose.model('User', schema);
+module.exports = function (mongoose) {
+    var Schema = mongoose.Schema;
+    var schema = new Schema({
+        name: String,
+        flights: [{
+            number: String,
+            departure: {
+                date: Date,
+                location: String
+            },
+            arrival: {
+                date: Date,
+                location: String
+            }
+        }]
+    });
+    var Model = mongoose.model('User', schema);
 
-	return Model;
+    return Model;
 };
