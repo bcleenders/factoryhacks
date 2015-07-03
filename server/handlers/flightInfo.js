@@ -3,14 +3,11 @@ var secrets = require('../secrets');
 
 var handle = function (req, reply) {
 
-	var name = 'Bram';//req.payload.name;
-	var flightNumber = req.params.flight;
-	var originAddress = 'A';//req.payload.originAddress;
-	var destinationAddress = 'B';//req.payload.destinationAddress;
-	var departureDate = req.params.departureDate;
-
-	flightNumber = 'LH1041';
-	departureDate = '2015-07-02';
+	var name = req.payload.name;
+	var flightNumber = req.payload.flightId;
+	var originAddress = req.payload.originAddress;
+	var destinationAddress = req.payload.destinationAddress;
+	var departureDate = req.payload.departureDate;
 
 	var postData = {
 		client_id: secrets.lufthansa.client_id,
@@ -23,6 +20,7 @@ var handle = function (req, reply) {
 		.send(postData)
 		.end(function (response) {
 			access_token = response.body.access_token;
+			console.log(access_token);
 
 			unirest.get('https://api.lufthansa.com/v1/operations/flightstatus/' + flightNumber + '/' + departureDate)
 				.header("Authorization", "Bearer " + access_token)

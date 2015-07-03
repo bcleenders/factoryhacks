@@ -8,8 +8,13 @@ var routes = [
     },
     {
         method: ['POST', 'GET'],
-        path: '/flight/{flight_id}',
+        path: '/flight',
         handler: require('./handlers/flightInfo').handle
+    },
+    {
+        method: ['POST', 'GET'],
+        path: '/getTimes',
+        handler: require('./handlers/getTimes').handle
     }
 ];
 
