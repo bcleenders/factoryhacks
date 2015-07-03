@@ -15,6 +15,11 @@ var routes = [
         method: ['POST', 'GET'],
         path: '/getTimes',
         handler: require('./handlers/getTimes').handle
+    },
+    {
+        method: 'POST',
+        path: '/uber/{user_id}/authenticate',
+        handler: require('./handlers/uber').authenticate
     }
 ];
 

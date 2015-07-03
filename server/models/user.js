@@ -1,7 +1,9 @@
 module.exports = function (mongoose) {
     var Schema = mongoose.Schema;
     var schema = new Schema({
-        name: String,
+		name: String,
+    	access_token: String,
+    	refresh_token: String,
         flights: [{
             number: String,
             departure: {
