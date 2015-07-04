@@ -4,7 +4,7 @@ module.exports = function (mongoose) {
 		name: String,
     	access_token: String,
     	refresh_token: String,
-        flights: [{
+        flight: {
             number: String,
             departure: {
                 date: Date,
@@ -22,7 +22,7 @@ module.exports = function (mongoose) {
                   longitude: Number
                 }
             }
-        }]
+        }
     });
     var Model = mongoose.model('User', schema);
 

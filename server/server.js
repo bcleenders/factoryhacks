@@ -38,4 +38,9 @@ for(var name in plugins) {
     });
 }
 
+// Load the cronjobs
+var cronjobs = require('./cronjobs');
+for(var name in cronjobs) {
+    cronjobs[name].start(server);
+}
 module.exports = server;
