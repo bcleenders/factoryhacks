@@ -33,24 +33,31 @@ angular.module('yapp')
                 .success(function (data, status, headers, config) {
                     console.log(data);
 
-                    var waypts = [
-                        {
-                            location: new google.maps.LatLng(data.departure.location.latitude, data.departure.location.longitude),
-                            stopover: true
-                        }
-                        ,
-                        {
-                            location: new google.maps.LatLng(data.arrival.location.latitude, data.arrival.location.longitude),
-                            stopover: true
-                        }
-                    ];
-                    console.log(waypts);
                     var request = {
                         origin:  new google.maps.LatLng(data.originAddress.latitude, data.originAddress.longitude),
-                        //destination: new google.maps.LatLng(data.arrival.location.latitude, data.arrival.location.longitude),
-                        //origin: new google.maps.LatLng(data.originAddress.latitude, data.originAddress.longitude),
+                        destination: new google.maps.LatLng(data.departure.location.latitude, data.departure.location.longitude),
+                        waypoints: [],
+                        optimizeWaypoints: true,
+                        travelMode: google.maps.TravelMode.DRIVING
+                    };
+                    var routes;
+                    $scope.directionsService.route(request, function (response, status) {
+                        console.log(response);
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            console.log("Response");
+
+                            console.log(response);
+
+                            routes = response.routes[0];
+
+
+                        }
+                    });
+
+                    var request = {
+                        origin:  new google.maps.LatLng(data.arrival.location.latitude, data.arrival.location.longitude),
                         destination: new google.maps.LatLng(data.destinationAddress.latitude, data.destinationAddress.longitude),
-                        waypoints: waypts,
+                        waypoints: [],
                         optimizeWaypoints: true,
                         travelMode: google.maps.TravelMode.DRIVING
                     };
@@ -60,19 +67,78 @@ angular.module('yapp')
                             console.log("Response");
 
                             console.log(response);
-                            $scope.directionsDisplay.setDirections(response);
-                            var route = response.routes[0];
-                            var summaryPanel = document.getElementById('directions_panel');
-                            // For each route, display summary information.
-                            for (var i = 0; i < route.legs.length; i++) {
-                                var routeSegment = i + 1;
-                                $scope.output += '<b>Route Segment: ' + routeSegment + '</b><br>';
-                                $scope.output += route.legs[i].start_address + ' to ';
-                                $scope.output += route.legs[i].end_address + '<br>';
-                                $scope.output += route.legs[i].distance.text + '<br><br>';
-                            }
+                            // response.routes[0].legs[1] = routes.legs[0];
+                            // $scope.directionsDisplay.setDirections(response);
+                            // var route = response.routes[0];
+                            // var summaryPanel = document.getElementById('directions_panel');
+                            // // For each route, display summary information.
+                            // for (var i = 0; i < route.legs.length; i++) {
+                            //     var routeSegment = i + 1;
+                            //     $scope.output += '<b>Route Segment: ' + routeSegment + '</b><br>';
+                            //     $scope.output += route.legs[i].start_address + ' to ';
+                            //     $scope.output += route.legs[i].end_address + '<br>';
+                            //     $scope.output += route.legs[i].distance.text + '<br><br>';
+                            // }
 
-                            //alert($scope.output);
+                            var homeLinePath = routes.overview_path
+                            var homeLine = new google.maps.Polyline({
+                              path: homeLinePath,
+                              geodesic: true,
+                              strokeColor: '#FF0000',
+                              strokeOpacity: 1.0,
+                              strokeWeight: 3
+                            });
+                            homeLine.setMap(map);
+
+                            var marker = new google.maps.Marker({
+                                position: routes.legs[0].end_location,
+                                map: map,
+                                title: 'Hello World!'
+                            });
+                            marker.setMap(map);
+                            var marker = new google.maps.Marker({
+                                position: routes.legs[0].start_location,
+                                map: map,
+                                title: 'Hello World!'
+                            });
+                            marker.setMap(map);
+
+                            var endLinePath = response.routes[0].overview_path
+                            var endLine = new google.maps.Polyline({
+                              path: endLinePath,
+                              geodesic: true,
+                              strokeColor: '#FF0000',
+                              strokeOpacity: 1.0,
+                              strokeWeight: 3
+                            });
+                            endLine.setMap(map);
+
+                            var marker = new google.maps.Marker({
+                                position: response.routes[0].legs[0].end_location,
+                                map: map,
+                                title: 'Hello World!'
+                            });
+                            marker.setMap(map);
+                            var marker = new google.maps.Marker({
+                                position: response.routes[0].legs[0].start_location,
+                                map: map,
+                                title: 'Hello World!'
+                            });
+                            marker.setMap(map);
+
+                            var coords = [
+                              routes.legs[0].end_location,
+                              response.routes[0].legs[0].start_location
+                            ];
+
+                            var flightPath = new google.maps.Polyline({
+                              path: coords,
+                              geodesic: true,
+                              strokeColor: '#FF0000',
+                              strokeOpacity: 1.0,
+                              strokeWeight: 3
+                            });
+                            flightPath.setMap(map);
                         }
                     });
 

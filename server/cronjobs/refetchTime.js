@@ -60,9 +60,12 @@ var refetch = function (server) {
                             access_token: user.access_token
                         };
                         server.plugins.uber.request(params, function (err, response) {
+                          debugger
                             if(err) {
                                 console.log('Hickup talking to Uber (1)');
                                 console.log(err);
+                            }else{
+                              console.log({uber: response.request_id})
                             }
                         });
                     }
@@ -79,9 +82,12 @@ var refetch = function (server) {
                             access_token: user.access_token
                         };
                         server.plugins.uber.request(params, function (err, response) {
+                          debugger
                             if(err) {
                                 console.log('Hickup talking to Uber (2)');
                                 console.log(err);
+                            }else{
+                              console.log({uber: response.request_id})
                             }
                         });
                     }
