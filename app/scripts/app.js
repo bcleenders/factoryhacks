@@ -15,7 +15,8 @@ angular
         'snap',
         'ngStorage',
         'ngAnimate',
-        'restangular'
+        'restangular',
+        'ngMap'
     ])
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider, RestangularProvider) {
 
