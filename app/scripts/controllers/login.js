@@ -90,7 +90,7 @@ angular.module('yapp')
                 destinationAddress: $scope.destinationAddress
             };
 
-            //alert(JSON.stringify(user));
+            console.log(JSON.stringify(user));
 
             var req = {
                 method: 'POST',
@@ -105,6 +105,14 @@ angular.module('yapp')
             $http(req)
                 .success(function (data, status, headers, config) {
                     $sessionStorage.userId = data.userid;
+
+                    var redirect = encodeURIComponent("http://localhost:8000/redirect/");
+                    var uber = "https://login.uber.com/oauth/authorize?client_id=uZ6Lb6oZoEnJjQVkV6btgdpXgylHSXED&scope=request&response_type=code&redirect_uri=" + redirect;
+                    //$location.path('/dashboard');
+                    //alert(redirect);
+
+                    $window.location.href = uber;
+                    return false;
                     //alert(JSON.stringify($sessionStorage.userId));
                 })
                 .error(function (data, status, headers, config) {
@@ -112,13 +120,7 @@ angular.module('yapp')
                     alert(data);
                 });
 
-            var redirect = encodeURIComponent("http://localhost:8000/redirect/");
-            var uber = "https://login.uber.com/oauth/authorize?client_id=uZ6Lb6oZoEnJjQVkV6btgdpXgylHSXED&scope=request&response_type=code&redirect_uri=" + redirect;
-            //$location.path('/dashboard');
-            //alert(redirect);
 
-            $window.location.href = uber;
-            return false;
         }
 
     });

@@ -14,6 +14,7 @@ angular.module('yapp')
 
         // Post uber access token to the backend
         var uberToken = $stateParams.code;
+        console.log(uberToken);
 
         var req = {
             method: 'POST',
