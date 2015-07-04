@@ -56,6 +56,14 @@ var refetch = function(server) {
                         console.log('**************************************');
                     }
 
+                    // If your plane leaves within the next three hours, call a cab!
+                    if(moment(result[i].flight.departure.date).isBefore(moment().subtract(150, 'minutes')) &&
+                        moment(result[i].flight.departure.date).isAfter(moment().subtract(180, 'minutes'))) {
+
+                        // From result[i].flight.originAddress.{longitude, latitude}
+                        // To result[i].flight.departure.location.{longitude, latitude}
+                    }
+
                     // If we updated the records, we should probably update the model
                     if(changed) {
                         result[i].save();
