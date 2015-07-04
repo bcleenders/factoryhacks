@@ -31,12 +31,12 @@ var handle = function (req, reply) {
                     originAddress: originAddress,
                     departure: {
                         date: info.departureTime,
-                        location: info.departureAirport
+                        location: {address: info.departureAirport}
                     },
                     destinationAddress: destinationAddress,
                     arrival: {
                         date: info.arrivalTime,
-                        location: info.departureAirport
+                        location: {address: info.departureAirport}
                     }
                 }
             });
