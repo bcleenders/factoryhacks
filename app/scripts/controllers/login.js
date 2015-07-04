@@ -76,9 +76,6 @@ angular.module('yapp')
             return '';
         };
 
-        //$scope.originAddress = "";
-        //$scope.destinationAddress = "";
-
 
         $scope.submit = function () {
             // post to the api
@@ -117,14 +114,11 @@ angular.module('yapp')
 
                     $window.location.href = uber;
                     return false;
-                    //alert(JSON.stringify($sessionStorage.userId));
                 })
                 .error(function (data, status, headers, config) {
                     alert("Failed status: " + status);
                     alert(data);
                 });
-
-
         }
 
     });
