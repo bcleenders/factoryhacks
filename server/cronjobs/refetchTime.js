@@ -1,6 +1,6 @@
 var moment = require('moment');
 
-var refetch = function(server) {
+var refetch = function (server) {
     console.log('Started running...');
 
     // Find all flights between now and 24 hours from now, and update their expected time of arrival/departure
@@ -11,10 +11,10 @@ var refetch = function(server) {
         },
         // Only flights that leave after yesterday
         'flight.departure.date': {
-            $gt: moment().subtract(1, 'days').toDate()
+            $gt: moment().subtract(10, 'days').toDate()
         }
-    }, function(err, result) {
-        if(err) {
+    }, function (err, result) {
+        if (err) {
             console.log("Error:");
             console.log(err);
             return;
@@ -22,50 +22,72 @@ var refetch = function(server) {
 
         console.log('Found ' + result.length + ' hits');
 
-        for(var i = 0; i < result.length; i++) {
+        for (var i = 0; i < result.length; i++) {
             // Dereference the i
-            (function(i) {
+            (function (i) {
                 console.log(result[i]);
 
                 var flightNumber = result[i].flight.number;
                 var departureDate = result[i].flight.departure.date;
 
-                server.plugins.flightinfo.get(flightNumber, departureDate, function(newInfo) {
+                server.plugins.flightinfo.get(flightNumber, departureDate, function (newInfo) {
                     var changed = false;
 
                     // More than a minute difference in departure
-                    if (Math.abs(moment(result[i].flight.departure.date).diff(moment(newInfo.departureTime))) > 60*1000) {
+                    if (Math.abs(moment(result[i].flight.departure.date).diff(moment(newInfo.departureTime))) > 60 * 1000) {
                         // Update the model
                         result[i].flight.departure.date = newInfo.departureTime;
                         changed = true;
                     }
 
                     // More than a minute difference in arrival
-                    if (Math.abs(moment(result[i].flight.arrival.date).diff(moment(newInfo.arrivalTime))) > 60*1000) {
+                    if (Math.abs(moment(result[i].flight.arrival.date).diff(moment(newInfo.arrivalTime))) > 60 * 1000) {
                         // Update the model
                         result[i].flight.arrival.date = newInfo.arrivalTime;
                         changed = true;
                     }
 
                     // If you're gonna arrive within the next hour, we should notify Uber!
-                    if(moment(result[i].flight.arrival.date).isBefore(moment().add(1, 'hours')) &&
+                    if (moment(result[i].flight.arrival.date).isBefore(moment().add(1, 'hours')) &&
                         moment(result[i].flight.arrival.date).isAfter(moment().add(30, 'minutes'))) {
 
-                        console.log('**************************************');
-                        console.log("TODO: NOTIFY UBER");
-                        console.log('**************************************');
+                        var user = result[i];
+                        var params = {
+                            start_latitude: user.flight.arrival.location.latitude,
+                            start_longitude: user.flight.arrival.location.longitude,
+                            end_latitude: user.flight.destinationAddress.latitude,
+                            end_longitude: user.flight.destinationAddress.longitude,
+                            access_token: user.access_token
+                        };
+                        server.plugins.uber.request(params, function (err, response) {
+                            if(err) {
+                                console.log('Hickup talking to Uber (1)');
+                                console.log(err);
+                            }
+                        });
                     }
 
-                    // If your plane leaves within the next three hours, call a cab!
-                    if(moment(result[i].flight.departure.date).isBefore(moment().subtract(150, 'minutes')) &&
+                    if (moment(result[i].flight.departure.date).isBefore(moment().subtract(150, 'minutes')) &&
                         moment(result[i].flight.departure.date).isAfter(moment().subtract(180, 'minutes'))) {
 
-                        // From result[i].flight.originAddress.{longitude, latitude}
-                        // To result[i].flight.departure.location.{longitude, latitude}
+                        var user = result[i];
+                        var params = {
+                            start_latitude: user.flight.originAddress.location.latitude,
+                            start_longitude: user.flight.originAddress.location.longitude,
+                            end_latitude: user.flight.departure.location.latitude,
+                            end_longitude: user.flight.departure.location.longitude,
+                            access_token: user.access_token
+                        };
+                        server.plugins.uber.request(params, function (err, response) {
+                            if(err) {
+                                console.log('Hickup talking to Uber (2)');
+                                console.log(err);
+                            }
+                        });
                     }
 
                     // If we updated the records, we should probably update the model
-                    if(changed) {
+                    if (changed) {
                         result[i].save();
                     }
                 });
@@ -77,12 +99,11 @@ var refetch = function(server) {
 // Run every 10 seconds
 // Production would probably run once an hour ;-)
 var interval = 10 * 1000;
-var start = function(server) {
-    setInterval(function() {
+var start = function (server) {
+    setInterval(function () {
         refetch(server);
     }, interval);
 };
-
 
 module.exports = {
     start: start
