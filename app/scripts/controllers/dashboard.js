@@ -12,6 +12,6 @@ angular.module('yapp')
 
     $scope.$state = $state;
 
-    alert("User-id: " + $sessionStorage.userId);
+    //alert("User-id: " + $sessionStorage.userId);
 
   });

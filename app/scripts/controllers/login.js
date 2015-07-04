@@ -108,7 +108,7 @@ angular.module('yapp')
                     //alert(JSON.stringify($sessionStorage.userId));
                 })
                 .error(function (data, status, headers, config) {
-                    alert(status);
+                    alert("Failed status: " + status);
                     alert(data);
                 });
 

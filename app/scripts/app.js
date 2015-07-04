@@ -22,7 +22,7 @@ angular
         $locationProvider.html5Mode(true);
 
         $urlRouterProvider.when('/dashboard/', '/dashboard/overview');
-        //$urlRouterProvider.otherwise('/dashboard');
+        //$urlRouterProvider.otherwise('/login');
 
         RestangularProvider.setBaseUrl("http://localhost:3000/");
 
