@@ -76,6 +76,9 @@ angular.module('yapp')
             return '';
         };
 
+        //$scope.originAddress = "";
+        //$scope.destinationAddress = "";
+
 
         $scope.submit = function () {
             // post to the api
@@ -86,11 +89,12 @@ angular.module('yapp')
                 name: $scope.name,
                 flightId: $scope.flight,
                 departureDate: $scope.departureDate,
-                originAddress: $scope.destinationAddress,
+                originAddress: $scope.originAddress,
                 destinationAddress: $scope.destinationAddress
             };
 
             console.log(JSON.stringify(user));
+            //alert(JSON.stringify(user));
 
             var req = {
                 method: 'POST',

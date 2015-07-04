@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 
 exports.register = function (server, options, next) {
-    mongoose.connect('mongodb://localhost/test');
-
+    mongoose.connect('mongodb://localhost/factoryhacks');
+    mongoose.set('debug', true);
     // These are the files containing our model definitions
     var modelDefinitions = require('../models');
 
