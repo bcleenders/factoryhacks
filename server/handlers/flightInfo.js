@@ -28,12 +28,12 @@ var handle = function (req, reply) {
                 name: name,
                 flight: {
                     number: flightNumber,
-                    originAddress: originAddress,
+                    originAddress: {address: originAddress},
                     departure: {
                         date: info.departureTime,
                         location: {address: info.departureAirport}
                     },
-                    destinationAddress: destinationAddress,
+                    destinationAddress: {address: destinationAddress},
                     arrival: {
                         date: info.arrivalTime,
                         location: {address: info.departureAirport}
