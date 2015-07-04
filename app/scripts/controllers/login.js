@@ -33,7 +33,7 @@ angular.module('yapp')
         };
 
         $scope.changed = function () {
-            alert('Time changed to: ' + $scope.originTime);
+           // alert('Time changed to: ' + $scope.originTime);
         };
 
         $scope.clear = function () {
