@@ -18,6 +18,7 @@
   "homepage": "https://github.com/bcleenders/factoryhacks",
   "dependencies": {
     "hapi": "^8.6.1",
+    "moment": "^2.10.3",
     "mongoose": "^4.0.6",
     "node-uber": "0.0.6",
     "request": "^2.58.0",

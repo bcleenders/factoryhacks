@@ -1,7 +1,13 @@
 var unirest = require('unirest');
+var moment = require('moment');
 
-var getInfo = function(flightNumber, departureDate, callback) {
-    unirest.get('https://api.lufthansa.com/v1/operations/flightstatus/' + flightNumber + '/' + departureDate)
+var getInfo = function(flightNumber, date, callback) {
+
+    var m = moment(date);
+    var dateString = m.format("YYYY-MM-DD");
+
+
+    unirest.get('https://api.lufthansa.com/v1/operations/flightstatus/' + flightNumber + '/' + dateString)
         .header("Authorization", "Bearer " + server.plugins.init.access_token)
         .header('Accept', 'application/json')
         .end(function (response) {

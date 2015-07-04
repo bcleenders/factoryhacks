@@ -2,7 +2,7 @@ var Hapi = require('hapi');
 var server = new Hapi.Server();
 
 // Set some server stuff
-server.connection({
+server.connection({ routes: { cors: true },
     port: 3000
 });
 
