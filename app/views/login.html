@@ -49,6 +49,7 @@
                         <div class="form-group">
                             <input type="text" ng-model="originAddress" class="form-control input-lg" id="originAddress"
                                    placeholder="Address of origin">
+                            <timepicker ng-model="originTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
                         </div>
                     </div>
 
