@@ -11,7 +11,7 @@ var refetch = function(server) {
         },
         // Only flights that leave after yesterday
         'flight.departure.date': {
-            $gt: moment().subtract(10, 'days').toDate()
+            $gt: moment().subtract(1, 'days').toDate()
         }
     }, function(err, result) {
         if(err) {
