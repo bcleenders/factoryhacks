@@ -65,11 +65,21 @@ exports.register = function (server, options, next) {
     }
     query.drivers_available = true;
     var self = this;
-    self.products.list({ latitude: query.start_latitude, longitude: query.start_longitude, drivers_available: true}, function (err, res) {
-      if (err) return callback(err, null);
-      query.product_id = res.products[0].product_id;
-      self.requests.make(query, callback);
-    });
+    // self.products.list({ latitude: query.start_latitude, longitude: query.start_longitude, drivers_available: true}, function (err, res) {
+    //   if (err) return callback(err, null);
+    //   query.product_id = res.products[0].product_id;
+    //   self.requests.make(query, callback);
+    // });
+    response = {
+       "request_id": "852b8fdd-4369-4659-9628-e122662ad257",
+       "status": "processing",
+       "vehicle": null,
+       "driver": null,
+       "location": null,
+       "eta": 5,
+       "surge_multiplier": null
+    }
+    callback(null, response)
   }
   server.expose(uber);
 };
