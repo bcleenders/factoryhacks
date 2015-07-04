@@ -21,8 +21,8 @@ angular
 
         $locationProvider.html5Mode(true);
 
-        $urlRouterProvider.when('/dashboard', '/dashboard/overview');
-        $urlRouterProvider.otherwise('/login');
+        $urlRouterProvider.when('/dashboard/', '/dashboard/overview');
+        //$urlRouterProvider.otherwise('/dashboard');
 
         RestangularProvider.setBaseUrl("http://localhost:3000/");
 
@@ -33,11 +33,18 @@ angular
                 templateUrl: 'views/base.html'
             })
             .state('login', {
-                url: '/login',
+                url: '/login/',
                 parent: 'base',
                 templateUrl: 'views/login.html',
                 controller: 'LoginCtrl'
             })
+            .state('redirect', {
+                url: '/redirect/?code',
+                parent: 'base',
+                templateUrl: 'views/dashboard.html',
+                controller: 'RedirectCtrl'
+            }
+        )
             .state('dashboard', {
                 url: '/dashboard',
                 parent: 'base',

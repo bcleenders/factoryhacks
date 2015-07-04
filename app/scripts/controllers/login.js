@@ -78,7 +78,7 @@ angular.module('yapp')
 
 
         $scope.submit = function () {
-            // do post to api
+            // post to the api
 
             $scope.userId = 0;
 
@@ -86,16 +86,11 @@ angular.module('yapp')
                 name: $scope.name,
                 flightId: $scope.flight,
                 departureDate: $scope.departureDate,
-                originAddress: $scope.origin,
-                destinationAddress: $scope.destination
+                originAddress: $scope.destinationAddress,
+                destinationAddress: $scope.destinationAddress
             };
 
-            alert(JSON.stringify(user));
-            //var users = Restangular.all('users');
-            //
-            //users.post(user).then(function (newUser) {
-            //    alert(newUser)
-            //});
+            //alert(JSON.stringify(user));
 
             var req = {
                 method: 'POST',
@@ -109,23 +104,20 @@ angular.module('yapp')
 
             $http(req)
                 .success(function (data, status, headers, config) {
-                    alert("succes");
-                    alert(data)
+                    $sessionStorage.userId = data.userid;
+                    //alert(JSON.stringify($sessionStorage.userId));
                 })
                 .error(function (data, status, headers, config) {
                     alert(status);
                     alert(data);
                 });
 
-            //$sessionStorage.userId = 1;
-            //alert($sessionStorage.userId);
-
-            var redirect = encodeURIComponent("http://localhost:8000/dashboard");
-            var uber = "https://login.uber.com/oauth/authorize?client_id=uZ6Lb6oZoEnJjQVkV6btgdpXgylHSXED&response_type=code&redirect_uri=" + redirect;
+            var redirect = encodeURIComponent("http://localhost:8000/redirect/");
+            var uber = "https://login.uber.com/oauth/authorize?client_id=uZ6Lb6oZoEnJjQVkV6btgdpXgylHSXED&scope=request&response_type=code&redirect_uri=" + redirect;
             //$location.path('/dashboard');
             //alert(redirect);
 
-            //$window.location.href = uber;
+            $window.location.href = uber;
             return false;
         }
 

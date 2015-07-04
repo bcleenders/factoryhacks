@@ -8,8 +8,10 @@
  * Controller of yapp
  */
 angular.module('yapp')
-  .controller('DashboardCtrl', function($scope, $state) {
+  .controller('DashboardCtrl', function($scope, $state, $sessionStorage) {
 
     $scope.$state = $state;
+
+    alert("User-id: " + $sessionStorage.userId);
 
   });
