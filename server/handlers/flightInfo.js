@@ -44,6 +44,7 @@ var handle = function (req, reply) {
             // Save the user
             u.save(function(err, s) {
                 if(!err) {
+                  console.log({userid: u._id})
                     reply({userid: u._id});
                 } else {
                     reply('Could not save info').code(400)

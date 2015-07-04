@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/bcleenders/factoryhacks",
   "dependencies": {
+    "good": "^6.2.0",
+    "good-console": "^5.0.2",
     "hapi": "^8.6.1",
     "moment": "^2.10.3",
     "mongoose": "^4.0.6",
