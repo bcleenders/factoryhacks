@@ -14,7 +14,7 @@ var handle = function (req, reply) {
     var flightNumber = req.payload.flightId;
     var originAddress = req.payload.originAddress;
     var destinationAddress = req.payload.destinationAddress;
-    var departureDate = req.payload.departureDate;
+    var departureDate = new Date(req.payload.departureDate);
 
     req.server.plugins.flightinfo.get(flightNumber, departureDate, function(info) {
             // Log that s***!
