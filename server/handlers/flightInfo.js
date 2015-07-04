@@ -22,32 +22,46 @@ var handle = function (req, reply) {
             console.log('Arrival airport: ' + info.arrivalAirport);
             console.log('Arrival datetime: ' + info.arrivalTime);
 
-            // Create a new user object (Mongoose)
-            var User = server.plugins.models.user;
-            var u = new User({
-                name: name,
-                flight: {
-                    number: flightNumber,
-                    originAddress: originAddress,
-                    departure: {
-                        date: info.departureTime,
-                        location: {address: info.departureAirport}
-                    },
-                    destinationAddress: destinationAddress,
-                    arrival: {
-                        date: info.arrivalTime,
-                        location: {address: info.departureAirport}
-                    }
-                }
-            });
+            req.server.plugins.airportinfo.get(info.departureAirport, function(departLocation) {
+                req.server.plugins.airportinfo.get(info.arrivalAirport, function(arriveLocation) {
 
-            // Save the user
-            u.save(function(err, s) {
-                if(!err) {
-                    reply({userid: u._id});
-                } else {
-                    reply('Could not save info').code(400)
-                }
+                    // Create a new user object (Mongoose)
+                    var User = server.plugins.models.user;
+
+                    var u = new User({
+                        name: name,
+                        flight: {
+                            number: flightNumber,
+                            originAddress: originAddress,
+                            departure: {
+                                date: info.departureTime,
+                                location: {
+                                    address: info.departureAirport,
+                                    latitude: departLocation.latitude,
+                                    longitude: departLocation.longitude
+                                }
+                            },
+                            destinationAddress: destinationAddress,
+                            arrival: {
+                                date: info.arrivalTime,
+                                location: {
+                                    address: info.arrivalAirport,
+                                    latitude: arriveLocation.latitude,
+                                    longitude: arriveLocation.longitude
+                                }
+                            }
+                        }
+                    });
+
+                    // Save the user
+                    u.save(function(err, s) {
+                        if(!err) {
+                            reply({userid: u._id});
+                        } else {
+                            reply('Could not save info').code(400)
+                        }
+                    });
+                });
             });
         });
 };
