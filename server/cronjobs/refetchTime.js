@@ -75,8 +75,8 @@ var refetch = function (server) {
 
                         var user = result[i];
                         var params = {
-                            start_latitude: user.flight.originAddress.location.latitude,
-                            start_longitude: user.flight.originAddress.location.longitude,
+                            start_latitude: user.flight.originAddress.latitude,
+                            start_longitude: user.flight.originAddress.longitude,
                             end_latitude: user.flight.departure.location.latitude,
                             end_longitude: user.flight.departure.location.longitude,
                             access_token: user.access_token
