@@ -3,7 +3,6 @@ var secrets = require('../secrets');
 
 /*
 Creates a user
->>>>>>> 413d7d3f9ae8bc7947ba40ce525b8928406534ea
 
 To test:
     curl -X POST -H "Cache-Control: no-cache" --data "flightId=LH400&departureDate=2015-07-02" http://localhost:3000/flight
@@ -27,7 +26,7 @@ var handle = function (req, reply) {
             var User = server.plugins.models.user;
             var u = new User({
                 name: name,
-                flights: [{
+                flight: {
                     number: flightNumber,
                     originAddress: originAddress,
                     departure: {
@@ -39,7 +38,7 @@ var handle = function (req, reply) {
                         date: info.arrivalTime,
                         location: info.departureAirport
                     }
-                }]
+                }
             });
 
             // Save the user
