@@ -4,17 +4,17 @@ module.exports = function (mongoose) {
 		name: String,
     	access_token: String,
     	refresh_token: String,
-      originAddress: {
-        address: String,
-        latitude: Number,
-        longitude: Number
-      },
-      destinationAddress:{
-        address: String,
-        latitude: Number,
-        longitude: Number
-      },
         flight: {
+          originAddress: {
+            address: String,
+            latitude: Number,
+            longitude: Number
+          },
+          destinationAddress:{
+            address: String,
+            latitude: Number,
+            longitude: Number
+          },
             number: String,
             departure: {
                 date: Date,
