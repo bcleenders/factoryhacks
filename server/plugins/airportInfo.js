@@ -4,8 +4,6 @@ var moment = require('moment');
 var getInfo = function(airportCode, callback, failcount) {
     failcount = failcount || 0;
 
-    console.log('AAAAAA');
-
     unirest.get('https://api.lufthansa.com/v1/references/airports/' + airportCode)
         .header("Authorization", "Bearer " + server.plugins.init.access_token)
         .header('Accept', 'application/json')
