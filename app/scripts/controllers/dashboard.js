@@ -38,18 +38,18 @@ angular.module('yapp')
                             location: new google.maps.LatLng(data.departure.location.latitude, data.departure.location.longitude),
                             stopover: true
                         }
-                        //,
-                        //{
-                        //    location: new google.maps.LatLng(data.arrival.location.latitude, data.arrival.location.longitude),
-                        //    stopover: true
-                        //}
+                        ,
+                        {
+                            location: new google.maps.LatLng(data.arrival.location.latitude, data.arrival.location.longitude),
+                            stopover: true
+                        }
                     ];
                     console.log(waypts);
                     var request = {
-                        origin: new google.maps.LatLng(data.departure.location.latitude, data.departure.location.longitude),
-                        destination: new google.maps.LatLng(data.arrival.location.latitude, data.arrival.location.longitude),
+                        origin:  new google.maps.LatLng(data.originAddress.latitude, data.originAddress.longitude),
+                        //destination: new google.maps.LatLng(data.arrival.location.latitude, data.arrival.location.longitude),
                         //origin: new google.maps.LatLng(data.originAddress.latitude, data.originAddress.longitude),
-                        //destination: new google.maps.LatLng(data.destinationAddress.latitude, data.destinationAddress.longitude),
+                        destination: new google.maps.LatLng(data.destinationAddress.latitude, data.destinationAddress.longitude),
                         waypoints: waypts,
                         optimizeWaypoints: true,
                         travelMode: google.maps.TravelMode.DRIVING

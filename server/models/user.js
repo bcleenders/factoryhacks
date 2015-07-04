@@ -77,7 +77,7 @@ module.exports = function (mongoose) {
         var self = this;
 
         if ((!self.get('flight').arrival.location.latitude) && self.get('flight').arrival.location.address) {
-            server.plugins.geocoder.coder.geocode(self.get('flight').arrival.location.address, function (err, res) {
+            server.plugins.geocoder.coder.geocode(self.get('flight').arrival.location.address + " airport", function (err, res) {
                 if (res == null || res.length == 0) {
                     return next();
                 }
@@ -96,7 +96,7 @@ module.exports = function (mongoose) {
         var self = this;
 
         if ((!self.get('flight').departure.location.latitude) && self.get('flight').departure.location.address) {
-            server.plugins.geocoder.coder.geocode(self.get('flight').departure.location.address, function (err, res) {
+            server.plugins.geocoder.coder.geocode(self.get('flight').departure.location.address  + " airport", function (err, res) {
                 if (res == null || res.length == 0) {
                     return next();
                 }

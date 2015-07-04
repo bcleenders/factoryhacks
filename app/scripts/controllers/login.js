@@ -122,7 +122,7 @@ angular.module('yapp')
             };
 
             console.log(JSON.stringify(user));
-            alert(JSON.stringify(user));
+            //alert(JSON.stringify(user));
 
             var req = {
                 method: 'POST',
