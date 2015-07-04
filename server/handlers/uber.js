@@ -1,5 +1,6 @@
 var Uber = require('node-uber');
 var secrets = require('../secrets');
+
 var authenticate = function (req, reply) {
   var models = server.plugins.models;
   var uber = new Uber(secrets.uber);

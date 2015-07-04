@@ -96,9 +96,9 @@ var refetch = function (server) {
     });
 };
 
-// Run every 10 seconds
+// Run every 60 seconds
 // Production would probably run once an hour ;-)
-var interval = 10 * 1000;
+var interval = 60 * 1000;
 var start = function (server) {
     setInterval(function () {
         refetch(server);

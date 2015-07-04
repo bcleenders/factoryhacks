@@ -1,10 +1,8 @@
 var routes = [
     {
         method: 'GET',
-        path: '/',
-        handler: function (request, reply) {
-          reply('Hello, world!');
-        }
+        path: '/route/{user_id}',
+        handler: require('./handlers/route').handle
     },
     {
         method: ['POST', 'GET'],

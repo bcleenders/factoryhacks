@@ -15,6 +15,7 @@ var getInfo = function(flightNumber, date, callback, failcount) {
 
             if(! response.ok) {
                 console.log('Fetching flight info failed...');
+                console.log(response.body);
 
                 if(failcount < 3) {
                     // Retry after 1 second
