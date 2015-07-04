@@ -11,7 +11,7 @@ var refetch = function(server) {
         },
         // Only flights that leave after yesterday
         'flight.departure.date': {
-            $gt: moment().subtract(1, 'days').toDate()
+            $gt: moment().subtract(10, 'days').toDate()
         }
     }, function(err, result) {
         if(err) {
@@ -50,33 +50,17 @@ var refetch = function(server) {
                     // If you're gonna arrive within the next hour, we should notify Uber!
                     if(moment(result[i].flight.arrival.date).isBefore(moment().add(1, 'hours')) &&
                         moment(result[i].flight.arrival.date).isAfter(moment().add(30, 'minutes'))) {
-                        var futureDate = new Date(Date.now().getTime() + 30*60000);
-                        var pastDate = new Date(Date.now().getTime() + -30*60000);
-                        server.plugins.models.user.find({"flight.departure.date": {"$gte": futureDate, "$lt": pastDate}}, function(err, uers){
-                          if(err) return;
-                          if(users.length > 0){
-                            users.forEach(function(user){
-                              var params = {
-                                              start_latitude: user.flight.originAddress.latitude,
-                                              start_longitude: user.flight.originAddress.longitude,
-                                              end_latitude: user.flight.departure.location.latitude,
-                                              end_longitude: user.flight.departure.location.longitude,
-                                              access_token: user.access_token
-                                            }
-                              server.plugins.uber.request(params,function(err, response){
+                        var user = result[i];
+                        var params = {
+                                        start_latitude: user.flight.arrival.location.latitude,
+                                        start_longitude: user.flight.arrival.location.longitude,
+                                        end_latitude: user.flight.destinationAddress.latitude,
+                                        end_longitude: user.flight.destinationAddress.longitude,
+                                        access_token: user.access_token
+                                      }
+                        server.plugins.uber.request(params,function(err, response){
 
-                              })
-                            })
-                          }
                         });
-                    }
-
-                    // If your plane leaves within the next three hours, call a cab!
-                    if(moment(result[i].flight.departure.date).isBefore(moment().subtract(150, 'minutes')) &&
-                        moment(result[i].flight.departure.date).isAfter(moment().subtract(180, 'minutes'))) {
-
-                        // From result[i].flight.originAddress.{longitude, latitude}
-                        // To result[i].flight.departure.location.{longitude, latitude}
                     }
 
                     // If we updated the records, we should probably update the model
